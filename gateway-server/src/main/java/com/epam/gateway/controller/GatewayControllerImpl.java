@@ -2,6 +2,7 @@ package com.epam.gateway.controller;
 
 import java.util.Date;
 
+import com.epam.gateway.model.ApiResponseAuth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class GatewayControllerImpl implements GatewayController {
 	private GatewayService gatewayService;
 
 	@Override
-	public ResponseEntity<ApiResponse<String>> login(LoginDetails loginDetails) {
+	public ResponseEntity<ApiResponseAuth<String>> login(LoginDetails loginDetails) {
 		log.info("Entired into the " + GatewayControllerImpl.class.getName() + "login Method");
 		return gatewayService.login(loginDetails);
 	}

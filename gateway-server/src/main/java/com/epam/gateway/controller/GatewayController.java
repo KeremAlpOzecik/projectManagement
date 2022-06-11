@@ -1,5 +1,6 @@
 package com.epam.gateway.controller;
 
+import com.epam.gateway.model.ApiResponseAuth;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,6 @@ public interface GatewayController {
 	public ResponseEntity<ApiResponse<User>> signUp(@RequestBody User user);
 
 	@PostMapping("/login")
-	public ResponseEntity<ApiResponse<String>> login(@RequestBody LoginDetails loginDetails);
+	public ResponseEntity<ApiResponseAuth<String>> login(@RequestBody LoginDetails loginDetails);
 
 }
