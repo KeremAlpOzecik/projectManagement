@@ -1,5 +1,6 @@
 package com.epam.auth.controller;
 
+import com.epam.auth.model.ApiResponseAuth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +17,7 @@ public class AuthControllerImpl implements AuthController {
 	private AuthService authService;
 
 	@Override
-	public ResponseEntity<ApiResponse<String>> login(LoginDetails loginDetails) {
+	public ResponseEntity<ApiResponseAuth<String>> login(LoginDetails loginDetails) {
 		return authService.login(loginDetails);
 	}
 

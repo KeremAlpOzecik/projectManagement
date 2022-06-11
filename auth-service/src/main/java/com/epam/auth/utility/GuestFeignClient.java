@@ -18,6 +18,10 @@ public interface GuestFeignClient {
 	@GetMapping("/v1/api/users/username/{username}")
 	ResponseEntity<ApiResponse<User>> getUserByUserName(@PathVariable String username);
 
+	@GetMapping("/v1/api/users/{userid}")
+	ResponseEntity<ApiResponse<User>> getUserByUserId(@PathVariable Long userid);
+
+
 	@PostMapping("/v1/api/users")
 	public ResponseEntity<ApiResponse<User>> addUser(@RequestBody User user);
 }

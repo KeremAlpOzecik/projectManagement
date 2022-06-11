@@ -1,5 +1,6 @@
 package com.epam.auth.controller;
 
+import com.epam.auth.model.ApiResponseAuth;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +18,7 @@ public interface AuthController {
 	public ResponseEntity<ApiResponse<User>> signUp(@RequestBody User user);
 
 	@PostMapping("/login")
-	public ResponseEntity<ApiResponse<String>> login(@RequestBody LoginDetails loginDetails);
+	public ResponseEntity<ApiResponseAuth<String>> login(@RequestBody LoginDetails loginDetails);
 
 	@GetMapping("/validate/{token}")
 	public Boolean validateToken(@PathVariable String token);

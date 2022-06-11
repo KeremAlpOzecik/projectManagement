@@ -2,6 +2,7 @@ package com.epam.auth.service;
 
 import java.util.Date;
 
+import com.epam.auth.model.ApiResponseAuth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	@CircuitBreaker(name = "user-service", fallbackMethod = "loginFallback")
-	public ResponseEntity<ApiResponse<String>> login(LoginDetails loginDetails) {
+	public ResponseEntity<ApiResponseAuth<String>> login(LoginDetails loginDetails) {
 		log.info("Sending the get call to the guest service to get the user details");
 		User user = guestFeignClient.getUserByUserName(loginDetails.getUserName()).getBody().getData();
 		log.info("User detials has retrieved ");
@@ -39,9 +40,8 @@ public class AuthServiceImpl implements AuthService {
 			}
 			userName = user.getPassword();
 		}
-
 		return new ResponseEntity<>(
-				new ApiResponse<>(jwtUtility.generateToken(userName), new Date(), "Token generated"),
+				new ApiResponseAuth<>(user.getId(),jwtUtility.generateToken(userName), new Date(), "Token generated"),
 				HttpStatus.CREATED);
 	}
 

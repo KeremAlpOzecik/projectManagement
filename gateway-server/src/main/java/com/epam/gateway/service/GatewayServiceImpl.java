@@ -2,6 +2,7 @@ package com.epam.gateway.service;
 
 import java.util.Date;
 
+import com.epam.gateway.model.ApiResponseAuth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,11 +25,11 @@ public class GatewayServiceImpl implements GatewayService {
 
 	@Override
 	@CircuitBreaker(name = "user-service", fallbackMethod = "loginFallback")
-	public ResponseEntity<ApiResponse<String>> login(LoginDetails loginDetails) {
+	public ResponseEntity<ApiResponseAuth<String>> login(LoginDetails loginDetails) {
 		log.info("sending the get call to the http://localhost:8083/v1/api/login");
 		@SuppressWarnings("unchecked")
-		ApiResponse<String> apiResponse = restTemplate
-				.postForEntity("http://localhost:8083/v1/api/login", loginDetails, ApiResponse.class).getBody();
+		ApiResponseAuth<String> apiResponse = restTemplate
+				.postForEntity("http://localhost:8083/v1/api/login", loginDetails, ApiResponseAuth.class).getBody();
 		return new ResponseEntity<>(apiResponse, HttpStatus.OK);
 	}
 

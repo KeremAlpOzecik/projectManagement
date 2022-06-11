@@ -1,5 +1,6 @@
 package com.epam.gateway.service;
 
+import com.epam.gateway.model.ApiResponseAuth;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -10,6 +11,6 @@ import com.epam.gateway.model.User;
 public interface GatewayService {
 	public ResponseEntity<ApiResponse<User>> signUp(@RequestBody User user);
 
-	public ResponseEntity<ApiResponse<String>> login(LoginDetails loginDetails);
+	public ResponseEntity<ApiResponseAuth<String>> login(LoginDetails loginDetails);
 
 }
