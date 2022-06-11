@@ -4,7 +4,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.epam.guest.dto.ChangePasswordDto;
+import com.epam.guest.entity.UserDetails;
 import com.epam.guest.mapper.GuestMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +22,11 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 public class GuestControllerImpl implements GuestController {
 
 	@Autowired
 	private GuestService guestService;
-
 	@Override
 	public ResponseEntity<ApiResponse<UserDto>> addUser(UserDto userDto) {
 		log.info("Entered into the " + GuestControllerImpl.class.getName() + "addUser");
@@ -72,12 +75,23 @@ public class GuestControllerImpl implements GuestController {
 	}
 
 	@Override
+	public String changePassword(ChangePasswordDto changePasswordDto) {
+		guestService.changePassword(changePasswordDto);
+		return "Şifre Değişim İşlemi Başarılı";
+	}
+
+	@Override
 	public ResponseEntity<ApiResponse<UserDto>> getUserByUserName(String username) {
 		log.info("Entered into the " + GuestControllerImpl.class.getName() + "getUserByUserName");
 		User user = guestService.getUserByUserName(username);
 		return new ResponseEntity<>(new ApiResponse<>(GuestMapper.INSTANCE.convert(user),
 				LocalDate.now(), "User with " + username + " has retrieved"),
 				HttpStatus.OK);
+	}
+
+	@Override
+	public UserDetails getUserDetailsById(Long id) {
+		return guestService.getUserDetails(id);
 	}
 
 }

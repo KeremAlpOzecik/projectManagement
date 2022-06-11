@@ -3,6 +3,7 @@ package com.epam.guest.repository;
 import java.util.List;
 import java.util.Optional;
 
+import com.epam.guest.entity.UserDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
