@@ -43,7 +43,7 @@ public class GuestControllerImpl implements GuestController {
 				.collect(Collectors.toList());
 
 		return new ResponseEntity<>(new ApiResponse<>(usersDtos, 
-				LocalDate.now(), "User created "), HttpStatus.OK);
+				LocalDate.now(), ""), HttpStatus.OK);
 	}
 
 
@@ -92,6 +92,14 @@ public class GuestControllerImpl implements GuestController {
 	@Override
 	public UserDetails getUserDetailsById(Long id) {
 		return guestService.getUserDetails(id);
+	}
+
+	@Override
+	public ResponseEntity<ApiResponse<UserDetails>> addUserDetails(UserDetails userDetails) {
+		log.info("Entered into the " + GuestControllerImpl.class.getName() + "addUser");
+		UserDetails setUserDetails = guestService.setUserDetails(userDetails);
+		return new ResponseEntity<>(new ApiResponse<>(setUserDetails,
+				LocalDate.now(), "User Detail Added "), HttpStatus.CREATED);
 	}
 
 }

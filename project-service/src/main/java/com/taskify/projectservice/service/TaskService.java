@@ -19,7 +19,7 @@ public class TaskService {
     private final ProjectRepository projectRepository;
 
     public Task createTask(Task task) {
-        task.setDuration(Duration.ZERO);
+        task.setActivity(0L);
         return taskRepository.save(task);
     }
 
@@ -32,16 +32,16 @@ public class TaskService {
     }
 
 
-    public Task updateTask(Task task,Long id) {
+    public Task updateTask(Task task, Long id) {
         boolean isPresent = taskRepository.findById(id).isPresent();
-        if (isPresent){
+        if (isPresent) {
             taskRepository.save(task);
-        }
-        else {
+        } else {
             throw new NotFoundException("Task not found");
         }
         return task;
     }
+
     public List<Task> getTasks() {
         return taskRepository.findAll();
     }
@@ -50,22 +50,25 @@ public class TaskService {
         taskRepository.deleteById(id);
     }
 
-    public Long setTaskDuration(Long id,String taskDurationInHours, String taskDurationInMinutes, String taskDurationInSeconds) {
+    public Long setTaskActivity(Long id, Long activity) {
         Task task = getTask(id);
-        Duration duration = task.getDuration();
-        duration = duration.plusHours(Long.parseLong(taskDurationInHours)).plusMinutes(Long.parseLong(taskDurationInMinutes)).plusSeconds(Long.parseLong(taskDurationInSeconds));
+        activity = task.getActivity() + activity;
+        task.setActivity(activity);
         taskRepository.save(task);
-        return duration.toSeconds();
+        return activity;
     }
 
-    public List<Task> getAllTasksByUserId(Long userId){
+    public List<Task> getAllTasksByUserId(Long userId) {
+
         List<Project> projects = projectRepository.findByUserId(userId);
+        System.out.println(projects);
         List<Task> tasks = new ArrayList<>();
         for (Project project : projects) {
-            List<Task> allByProjectId = taskRepository.findAllByProjectId(project.getId());
-            tasks.addAll(allByProjectId);
+            tasks.addAll(getTasksByProjectId(project.getId()));
         }
+
         return tasks;
+
 
     }
 }

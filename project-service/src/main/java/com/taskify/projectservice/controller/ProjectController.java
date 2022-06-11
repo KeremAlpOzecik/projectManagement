@@ -77,8 +77,7 @@ public class ProjectController {
     }
 
     @PatchMapping("/task/update/activity")
-    public ResponseEntity updateTaskDuration(@RequestParam("duration")String duration , @RequestParam("id") Long id) {
-        String[] split = duration.split(":");
-        return ResponseEntity.ok(taskService.setTaskDuration(id,split[0],split[1],split[2]));
+    public ResponseEntity updateTaskDuration(@RequestParam("activity")Long activity , @RequestParam("id") Long id) {
+        return ResponseEntity.ok(taskService.setTaskActivity(id,activity));
     }
 }

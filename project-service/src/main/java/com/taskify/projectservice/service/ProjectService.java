@@ -47,6 +47,7 @@ public class ProjectService {
                 new ApiResponse<>(projectRepository.save(project), new Date(), "Project Created"),
                 HttpStatus.CREATED);
     CreateNotificationDto createNotificationDto = new CreateNotificationDto();
+    assert user != null;
     createNotificationDto.setEmail(user.getEmail());
     createNotificationDto.setDate(new Date());
     createNotificationDto.setProject(project1.toString());

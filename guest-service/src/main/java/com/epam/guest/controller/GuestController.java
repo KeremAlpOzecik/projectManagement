@@ -34,4 +34,9 @@ public interface GuestController {
 
 	@GetMapping("/users/details")
 	public UserDetails getUserDetailsById(@RequestParam("id") Long id );
+
+	@PostMapping("/users/detail")
+	public ResponseEntity<ApiResponse<UserDetails>> addUserDetails(@RequestBody UserDetails userDetails);
+
+
 }

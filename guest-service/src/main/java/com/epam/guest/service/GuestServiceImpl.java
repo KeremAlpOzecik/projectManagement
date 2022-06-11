@@ -81,12 +81,26 @@ public class GuestServiceImpl implements GuestService {
 
 	@Override
 	public UserDetails getUserDetails(Long id) {
-		Optional<UserDetails> optionalUser = userDetailsRepository.findById(id);
+		Optional<UserDetails> optionalUser = userDetailsRepository.findByUserId(id);
 		if (!optionalUser.isPresent()) {
 			throw new UserNotFoundException("Unable to find the User");
 		}
 		return optionalUser.get();
 
+	}
+	private Boolean isUserExist(Long id){
+		Optional<UserDetails> optionalUser = userDetailsRepository.findByUserId(id);
+		return optionalUser.isPresent();
+
+	}
+
+	@Override
+	public UserDetails setUserDetails(UserDetails userDetails) {
+		if (Boolean.TRUE.equals(isUserExist(userDetails.getUserId()))){
+			throw new IllegalArgumentException("User exist ");
+
+		}
+		return userDetailsRepository.save(userDetails);
 	}
 
 

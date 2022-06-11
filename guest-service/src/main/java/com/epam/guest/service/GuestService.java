@@ -22,5 +22,6 @@ public interface GuestService {
 	public User getUserByUserName(String username);
 	public void changePassword(ChangePasswordDto changePasswordDto);
 	public UserDetails getUserDetails(Long id);
+	public UserDetails setUserDetails(UserDetails userDetails);
 
 }

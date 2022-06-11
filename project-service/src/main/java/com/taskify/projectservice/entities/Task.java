@@ -28,7 +28,7 @@ public class Task implements Serializable {
     private LocalDate startDate;
     private LocalDate endDate;
     private Long projectId;
-    private Duration duration;
+    private Long activity;
 
 
 }

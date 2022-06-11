@@ -11,12 +11,15 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDetails extends User {
+public class UserDetails {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private Long userId;
     private String address;
     private String city;
     private String country;
     private String phone;
-
 
 
 }
