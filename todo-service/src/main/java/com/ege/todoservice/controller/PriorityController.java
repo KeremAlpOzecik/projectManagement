@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/api/priority")
+@RequestMapping("/v1/api/todo/priority")
 @RequiredArgsConstructor
 public class PriorityController {
 
     private final PriorityService service;
 
     @PostMapping("/create")
-    public ResponseEntity<PriorityDto> createPriority(CreatePriorityRequest request) {
+    public ResponseEntity<PriorityDto> createPriority(@RequestBody CreatePriorityRequest request) {
         return ResponseEntity.ok(service.createPriority(request));
     }
 

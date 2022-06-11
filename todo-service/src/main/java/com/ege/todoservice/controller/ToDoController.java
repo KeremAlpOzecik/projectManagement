@@ -6,6 +6,7 @@ import com.ege.todoservice.model.dto.TodoDto;
 import com.ege.todoservice.model.requests.CreateTodoRequest;
 import com.ege.todoservice.model.requests.UpdateTodoRequest;
 import com.ege.todoservice.service.ToDoService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

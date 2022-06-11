@@ -6,8 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(name = "user-service")
-@LoadBalancerClient(name = "user-service")
+@FeignClient(name = "USER-SERVICE")
+@LoadBalancerClient(name = "USER-SERVICE")
 public interface UserFeignClient {
 
 
