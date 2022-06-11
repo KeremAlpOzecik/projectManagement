@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Duration;
+
 @RestController
 @RequestMapping("/v1/api/project")
 @RequiredArgsConstructor
@@ -49,9 +51,14 @@ public class ProjectController {
     public ResponseEntity getAllTasks() {
         return ResponseEntity.ok(taskService.getTasks());
     }
+
     @GetMapping("/task/{id}")
     public ResponseEntity getTaskById(@RequestParam("id") Long id) {
         return ResponseEntity.ok(taskService.getTask(id));
+    }
+    @GetMapping("/task/all/userid")
+    public ResponseEntity getAllTasksByUserId(@RequestParam("userid") Long userId) {
+        return ResponseEntity.ok(taskService.getAllTasksByUserId(userId));
     }
 
     @PostMapping("/task/add")
@@ -67,5 +74,11 @@ public class ProjectController {
     @DeleteMapping("/task/delete")
     public void deleteTask(@RequestParam("id") Long id) {
         taskService.deleteTask(id);
+    }
+
+    @PatchMapping("/task/update/activity")
+    public ResponseEntity updateTaskDuration(@RequestParam("duration")String duration , @RequestParam("id") Long id) {
+        String[] split = duration.split(":");
+        return ResponseEntity.ok(taskService.setTaskDuration(id,split[0],split[1],split[2]));
     }
 }
