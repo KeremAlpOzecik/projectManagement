@@ -6,6 +6,11 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Collections;
 
 @SpringBootApplication
 @EnableEurekaClient
@@ -19,6 +24,18 @@ public class GatewayServerApplication {
 	@Bean
 	public RestTemplate getRestTemplate() {
 		return new RestTemplate();
+	}
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration apiCorsConfiguration = new CorsConfiguration();
+		apiCorsConfiguration.setAllowCredentials(true);
+		apiCorsConfiguration.setAllowedOriginPatterns(Collections.singletonList("*"));
+		apiCorsConfiguration.setAllowedHeaders(Collections.singletonList("*"));
+		apiCorsConfiguration.setAllowedMethods(Collections.singletonList("*"));
+
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", apiCorsConfiguration);
+		return source;
 	}
 
 }
