@@ -73,11 +73,11 @@ public class GuestServiceImpl implements GuestService {
 	@Override
 	public void changePassword(ChangePasswordDto changePasswordDto) {
 		User user = getUserById(changePasswordDto.getId());
-		if (!user.getPassword().equals(changePasswordDto.getOldPassword())){
+		if (!passwordEncoder.matches(changePasswordDto.getOldPassword(),user.getPassword())){
 			throw new UserPasswordNotMatchException("Şifre Doğru Değil");
 		}
 		else  {
-			user.setPassword(changePasswordDto.getNewPassword());
+			user.setPassword(passwordEncoder.encode(changePasswordDto.getNewPassword()));
 			guestRepository.save(user);
 		}
 
