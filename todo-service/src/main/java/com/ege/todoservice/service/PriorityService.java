@@ -42,10 +42,9 @@ public class PriorityService {
         return mapToDto(priority);
     }
 
-    public PriorityDto updatePriority(Long id, UpdatePriorityRequest request) {
+    public PriorityDto updatePriority(Long id) {
         Priority priority = priorityRepository.findById(id).orElse(null);
-        priority.setPriorityName(request.getPriorityName());
-        priority.setPriorityStatus(request.getPriorityStatus());
+        priority.setPriorityStatus(!priority.getPriorityStatus());
         Priority updatedPriority = priorityRepository.save(priority);
         return mapToDto(updatedPriority);
     }

@@ -27,9 +27,9 @@ public class PriorityController {
         return ResponseEntity.ok(service.getPriority(id));
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<PriorityDto> updatePriority(@PathVariable Long id, @RequestBody UpdatePriorityRequest request) {
-        return ResponseEntity.ok(service.updatePriority(id, request));
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<PriorityDto> updatePriority(@PathVariable Long id) {
+        return ResponseEntity.ok(service.updatePriority(id));
     }
 
     @DeleteMapping("/delete/{id}")
