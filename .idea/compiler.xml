@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="calendar" />
         <module name="auth-service" />
         <module name="discovery-server" />
         <module name="todo-service" />
@@ -18,6 +19,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="auth-service" target="11" />
+      <module name="calendar" target="11" />
       <module name="discovery-server" target="11" />
       <module name="gateway-server" target="11" />
       <module name="guest-service" target="11" />
@@ -29,6 +31,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="auth-service" options="-parameters" />
+      <module name="calendar" options="-parameters" />
       <module name="discovery-server" options="-parameters" />
       <module name="gateway-server" options="-parameters" />
       <module name="guest-service" options="-parameters" />
