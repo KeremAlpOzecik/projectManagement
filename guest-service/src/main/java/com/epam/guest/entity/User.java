@@ -8,7 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "USER_DETAILS")
+@Table(name = "_USER")
 @Setter
 @Getter
 @NoArgsConstructor

@@ -1,7 +1,9 @@
 package com.epam.guest.controller;
 
 import com.epam.guest.dto.ApiResponse;
+import com.epam.guest.dto.ChangePasswordDto;
 import com.epam.guest.dto.UserDto;
+import com.epam.guest.entity.UserDetails;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,9 +26,17 @@ public interface GuestController {
 	@DeleteMapping("/users/{userid}")
 	public ResponseEntity<ApiResponse<UserDto>> deleteUserById(@PathVariable Long userid);
 
-
+	@PutMapping("/users/changepassword")
+	public String changePassword(@RequestBody ChangePasswordDto changePasswordDto);
 
 	@GetMapping("/users/username/{username}")
 	public ResponseEntity<ApiResponse<UserDto>> getUserByUserName(@PathVariable String username);
+
+	@GetMapping("/users/details")
+	public UserDetails getUserDetailsById(@RequestParam("id") Long id );
+
+	@PostMapping("/users/detail")
+	public ResponseEntity<ApiResponse<UserDetails>> addUserDetails(@RequestBody UserDetails userDetails);
+
 
 }

@@ -7,7 +7,11 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.util.Timer;
+import java.util.TimerTask;
 
 @Entity
 @Table(name = "task")
@@ -24,6 +28,7 @@ public class Task implements Serializable {
     private LocalDate startDate;
     private LocalDate endDate;
     private Long projectId;
+    private Long activity;
 
 
 }
