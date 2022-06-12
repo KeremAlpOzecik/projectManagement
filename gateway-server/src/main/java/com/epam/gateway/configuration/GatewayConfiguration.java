@@ -15,21 +15,28 @@ import com.epam.gateway.filter.AuthFilterConfig;
 public class GatewayConfiguration {
 
 
-	private final AuthFilter authenticationFilter;
+    private final AuthFilter authenticationFilter;
 
-	@Bean
-	public RouteLocator gateWayRoutes(RouteLocatorBuilder builder) {
-		return builder.routes().route("user-service", r -> r.path("/v1/api/users/**")
-						.filters(f -> f.filter(authenticationFilter.apply(new AuthFilterConfig()))).uri("lb://user-service"))
-				.route("todo-service",
-						r -> r.path("/v1/api/todo/**")
-								.filters(f -> f.filter(authenticationFilter.apply(new AuthFilterConfig())))
-								.uri("lb://todo-service"))
-				.route("project-service",
-						r -> r.path("/v1/api/project/**")
-								.filters(f -> f.filter(authenticationFilter.apply(new AuthFilterConfig())))
-								.uri("lb://project-service"))
-				.build();
+    @Bean
+    public RouteLocator gateWayRoutes(RouteLocatorBuilder builder) {
+        return builder.routes()
+                .route("user-service",
+                        r -> r.path("/v1/api/users/**")
+                                .filters(f -> f.filter(authenticationFilter.apply(new AuthFilterConfig())))
+                                .uri("lb://user-service"))
+                .route("todo-service",
+                        r -> r.path("/v1/api/todo/**")
+                                .filters(f -> f.filter(authenticationFilter.apply(new AuthFilterConfig())))
+                                .uri("lb://todo-service"))
+                .route("project-service",
+                        r -> r.path("/v1/api/project/**")
+                                .filters(f -> f.filter(authenticationFilter.apply(new AuthFilterConfig())))
+                                .uri("lb://project-service"))
+                .route("calendar-service",
+                        r -> r.path("/v1/api/calendar/**")
+                                .filters(f -> f.filter(authenticationFilter.apply(new AuthFilterConfig())))
+                                .uri("lb://calendar-service"))
+                .build();
 
-	}
+    }
 }
