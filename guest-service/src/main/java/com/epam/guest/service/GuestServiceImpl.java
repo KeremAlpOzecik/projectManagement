@@ -17,6 +17,7 @@ import com.epam.guest.dto.UserDto;
 import com.epam.guest.entity.User;
 import com.epam.guest.exception.UserNotFoundException;
 import com.epam.guest.repository.GuestRepository;
+import org.webjars.NotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -33,8 +34,10 @@ public class GuestServiceImpl implements GuestService {
 		userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
 		UserDetails details = new UserDetails();
 		User save = guestRepository.save(GuestMapper.INSTANCE.convert(userDto));
-		details.setUserId(save.getId());
-		userDetailsRepository.save(details);
+		UserDetails userDetails = new UserDetails();
+		userDetails.setUserId(save.getId());
+		userDetailsRepository.save(userDetails);
+
 		return save;
 	}
 
@@ -102,12 +105,18 @@ public class GuestServiceImpl implements GuestService {
 
 	@Override
 	public UserDetails setUserDetails(UserDetails userDetails) {
-		if (Boolean.TRUE.equals(isUserExist(userDetails.getUserId()))){
-			throw new IllegalArgumentException("User exist ");
-
+	//update user details
+		if(isUserExist(userDetails.getUserId())){
+			UserDetails userDetails1 = getUserDetails(userDetails.getUserId());
+			userDetails1.setAddress(userDetails.getAddress());
+			userDetails1.setCity(userDetails.getCity());
+			userDetails1.setCountry(userDetails.getCountry());
+			userDetails1.setPhone(userDetails.getPhone());
+			userDetailsRepository.save(userDetails1);
+			return userDetails1;
 		}
-		return userDetailsRepository.save(userDetails);
-	}
+		else{
+			throw new NotFoundException("User Not Found");
+		}
 
-
-}
+}}
