@@ -2,15 +2,13 @@ package com.epam.auth.service;
 
 import java.util.Date;
 
-import com.epam.auth.model.ApiResponseAuth;
+import com.epam.auth.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.epam.auth.model.ApiResponse;
-import com.epam.auth.model.LoginDetails;
-import com.epam.auth.model.User;
 import com.epam.auth.utility.GuestFeignClient;
 import com.epam.auth.utility.JwtUtility;
 
@@ -27,6 +25,9 @@ public class AuthServiceImpl implements AuthService {
 	@Autowired
 	private JwtUtility jwtUtility;
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 	@Override
 	@CircuitBreaker(name = "user-service", fallbackMethod = "loginFallback")
 	public ResponseEntity<ApiResponseAuth<String>> login(LoginDetails loginDetails) {
@@ -35,7 +36,9 @@ public class AuthServiceImpl implements AuthService {
 		log.info("User detials has retrieved ");
 		String userName = null;
 		if (user != null) {
-			if (!user.getPassword().equals(loginDetails.getPassword())) {
+
+
+			if (!passwordEncoder.matches(loginDetails.getPassword(),user.getPassword())) {
 				throw new RuntimeException("Password is wrong");
 			}
 			userName = user.getPassword();
@@ -58,9 +61,16 @@ public class AuthServiceImpl implements AuthService {
 	}
 
 	@Override
-	public ResponseEntity<ApiResponse<User>> signUp(User userDto) {
+	public ResponseEntity<ApiResponse<UserDto>> signUp(User userDto) {
 		User user = guestFeignClient.addUser(userDto).getBody().getData();
-		return new ResponseEntity<>(new ApiResponse<>(user, new Date(), "Token generated"), HttpStatus.CREATED);
+		UserDto dto = new UserDto();
+		dto.setStatus(user.getStatus());
+		dto.setUserName(user.getUserName());
+		dto.setId(user.getId());
+		dto.setEmail(user.getEmail());
+		dto.setName(user.getName());
+
+		return new ResponseEntity<>(new ApiResponse<>(dto, new Date(), "Token generated"), HttpStatus.CREATED);
 	}
 
 }

@@ -10,6 +10,7 @@ import com.epam.guest.mapper.GuestMapper;
 import com.epam.guest.repository.UserDetailsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.epam.guest.dto.UserDto;
@@ -24,9 +25,12 @@ public class GuestServiceImpl implements GuestService {
 	@Autowired
 	private GuestRepository guestRepository;
 
+	private final PasswordEncoder passwordEncoder;
+
 	private final UserDetailsRepository userDetailsRepository;
 
 	public User addUser(UserDto userDto) {
+		userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
 		return guestRepository.save(GuestMapper.INSTANCE.convert(userDto));
 	}
 
