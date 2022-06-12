@@ -14,5 +14,5 @@ import java.util.List;
 public interface ProjectFeignClient {
 
     @GetMapping("/v1/api/project/task/all/userid")
-    ResponseEntity<ApiResponse<List<Task>>> getAllTasksByUserId(@RequestParam("userid") Long userid);
+   List<Task> getAllTasksByUserId(@RequestParam("userid") Long userid);
 }

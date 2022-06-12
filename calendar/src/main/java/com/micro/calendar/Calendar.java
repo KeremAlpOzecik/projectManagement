@@ -3,8 +3,6 @@ package com.micro.calendar;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 import java.time.LocalDate;
 
 
@@ -13,7 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Calendar {
 
-    private Long id;
+    private int id;
     private String description;
     private String status;
     private LocalDate date;
