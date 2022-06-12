@@ -67,7 +67,7 @@ public class ProjectController {
         return ResponseEntity.ok(taskService.createTask(task));
     }
 
-    @PutMapping("/task/update/{id}")
+    @PutMapping("/task/update")
     public ResponseEntity updateTask(@RequestBody Task task, @RequestParam("id") Long id) {
         return ResponseEntity.ok(taskService.updateTask(task,id));
     }

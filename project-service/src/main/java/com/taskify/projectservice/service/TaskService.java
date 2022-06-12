@@ -33,13 +33,20 @@ public class TaskService {
 
 
     public Task updateTask(Task task, Long id) {
-        boolean isPresent = taskRepository.findById(id).isPresent();
-        if (isPresent) {
-            taskRepository.save(task);
+        Task task1 = taskRepository.findById(id).orElse(null);
+
+        if (task1 != null) {
+            task1.setActivity(task.getActivity());
+            task1.setDescription(task.getDescription());
+            task1.setStatus(task.getStatus());
+            task1.setProjectId(task.getProjectId());
+            task1.setStartDate(task.getStartDate());
+            task1.setEndDate(task.getEndDate());
+            taskRepository.save(task1);
         } else {
             throw new NotFoundException("Task not found");
         }
-        return task;
+        return task1;
     }
 
     public List<Task> getTasks() {
