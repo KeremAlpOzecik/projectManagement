@@ -1,11 +1,13 @@
 package com.taskify.projectservice.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -32,7 +34,9 @@ public class Project implements Serializable {
     private String projectName;
     private String projectDescription;
     private String projectStatus;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate projectStartDate;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate projectEndDate;
 
 

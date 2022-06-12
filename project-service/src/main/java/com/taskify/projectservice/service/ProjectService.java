@@ -4,10 +4,12 @@ import com.taskify.projectservice.ApiResponse;
 import com.taskify.projectservice.User;
 import com.taskify.projectservice.UserFeignClient;
 import com.taskify.projectservice.dao.ProjectRepository;
+import com.taskify.projectservice.dao.TaskRepository;
 import com.taskify.projectservice.entities.Project;
 import com.taskify.projectservice.entities.Task;
 import com.taskify.projectservice.entities.event.CreateNotificationDto;
 import com.taskify.projectservice.entities.event.CreateNotificationEvent;
+import com.taskify.projectservice.entities.event.ProjectTasks;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,13 +29,14 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-
 public class ProjectService {
     private final ProjectRepository projectRepository;
+    private final TaskRepository taskRepository;
     private final TaskService taskService;
     private final UserFeignClient userFeignClient;
     private final ApplicationEventPublisher publisher;
-@Transactional()
+
+    @Transactional()
     public ResponseEntity<ApiResponse<Project>> createProject(Project project) {
         log.info("Entered" + getClass().getName());
         String transactionId = UUID.randomUUID().toString();
@@ -55,14 +58,22 @@ public class ProjectService {
         return responseEntity;
     }
     public User getUserDetails(Project project) {
-        return userFeignClient.getUserByUserName(project.getUserName()).getBody().getData();
+        return userFeignClient.getUserByUserId(project.getUserId()).getBody().getData();
     }
 
     public Project getProject(Long id) {
         return projectRepository.findById(id).orElse(null);
     }
-    public List<Task> getProjectTasks(Long id) {
-        return taskService.getTasksByProjectId(id);
+
+    public ProjectTasks getProjectTasks(Long id) {
+        List<Task> todos = taskRepository.findAllByProjectIdAndStatus(id, "todo");
+        List<Task> inProgress = taskRepository.findAllByProjectIdAndStatus(id, "inProgress");
+        List<Task> done = taskRepository.findAllByProjectIdAndStatus(id, "done");
+        ProjectTasks projectTasks = new ProjectTasks();
+        projectTasks.setTodo(todos);
+        projectTasks.setInProgress(inProgress);
+        projectTasks.setDone(done);
+        return projectTasks;
     }
 
     public List<Project> getAllProjects() {
@@ -95,7 +106,7 @@ public class ProjectService {
                 log.info("Project End Date is coming");
                 log.info("USER NAME,{}",project.getUserName());
                 CreateNotificationDto createNotificationDto = new CreateNotificationDto();
-                User data = userFeignClient.getUserByUserName(project.getUserName()).getBody().getData();
+                User data = userFeignClient.getUserByUserId(project.getUserId()).getBody().getData();
                 createNotificationDto.setEmail(data.getEmail());
                 createNotificationDto.setDate(new Date());
                 createNotificationDto.setProject(project.toString());
