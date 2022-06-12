@@ -12,9 +12,8 @@ import java.time.LocalDate;
 public class Calendar {
 
     private int id;
-    private String description;
-    private String status;
-    private LocalDate date;
-    private Long userId;
+    private String title;
+    private LocalDate from;
+    private LocalDate to;
     private String color;
 }

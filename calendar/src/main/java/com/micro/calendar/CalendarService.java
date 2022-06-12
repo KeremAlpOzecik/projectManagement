@@ -26,10 +26,9 @@ public class CalendarService {
         todoFeignClient.getAllByUserId(userId).forEach(todo -> {
             count.getAndIncrement();
             Calendar calendar = new Calendar();
-            calendar.setDescription(todo.getContent());
-            calendar.setStatus(null);
-            calendar.setDate(todo.getDate());
-            calendar.setUserId(userId);
+            calendar.setTitle(todo.getContent());
+            calendar.setFrom(todo.getDate());
+            calendar.setTo(todo.getDate());
             calendar.setColor(generateColorCode());
             calendar.setId(count.get());
             calendars.add(calendar);
@@ -37,10 +36,9 @@ public class CalendarService {
         projectFeignClient.getAllTasksByUserId(userId).forEach(project -> {
             count.getAndIncrement();
             Calendar calendar = new Calendar();
-            calendar.setDescription(project.getName());
-            calendar.setStatus(project.getStatus());
-            calendar.setDate(project.getEndDate());
-            calendar.setUserId(userId);
+            calendar.setTitle(project.getDescription());
+            calendar.setFrom(project.getEndDate());
+            calendar.setTo(project.getEndDate());
             calendar.setColor(generateColorCode());
             calendar.setId(count.get());
             calendars.add(calendar);

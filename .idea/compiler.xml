@@ -26,6 +26,7 @@
       <module name="notification-service" target="1.8" />
       <module name="project-service" target="11" />
       <module name="todo-service" target="11" />
+      <module name="wrapper" target="1.5" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
