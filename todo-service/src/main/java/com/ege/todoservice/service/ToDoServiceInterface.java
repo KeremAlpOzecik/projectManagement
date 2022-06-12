@@ -18,4 +18,7 @@ public interface ToDoServiceInterface {
     void deleteTodo(Long id);
     ResponseEntity<ApiResponse<Todo>> saveTodo(Todo request);
 
+    List<TodoDto> getAllByUserId(Long userId);
+
+    TodoDto updateCompleteStatus(Long id);
 }

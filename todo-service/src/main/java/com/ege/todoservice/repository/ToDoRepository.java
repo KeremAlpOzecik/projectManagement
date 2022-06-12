@@ -14,4 +14,6 @@ public interface ToDoRepository extends JpaRepository<Todo, Long> {
 
     @Query(value = "SELECT * FROM todo WHERE target_date >= :startDate AND target_date <= :endDate", nativeQuery = true)
     List<Todo> findAllByDateBetween(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
+    List<Todo> findAllByUserId(Long userId);
 }

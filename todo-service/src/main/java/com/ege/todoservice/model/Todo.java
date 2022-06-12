@@ -23,11 +23,9 @@ public class Todo {
     private Long id;
 
     @Column
-    @Size(min = 5, message = "Explain your work...")
     private String content;
 
     @Column(name = "date")
-    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
 
     private Boolean completed;

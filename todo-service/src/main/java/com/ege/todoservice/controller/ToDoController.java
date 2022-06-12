@@ -34,16 +34,15 @@ public class ToDoController {
     @PostMapping(value = "/add-todo")
     public ResponseEntity<ApiResponse<Todo>> addTodo(@RequestBody Todo request){
         return toDoService.saveTodo(request);
-
     }
 
-    @PutMapping(value = "/update-todo")
-    public TodoDto updateTodo(@RequestParam Long id ,@RequestBody UpdateTodoRequest request){
+    @PostMapping(value = "/update-todo/{id}")
+    public TodoDto updateTodo(@PathVariable Long id ,@RequestBody UpdateTodoRequest request){
         return toDoService.updateTodo(id, request);
     }
 
-    @DeleteMapping(value = "/delete-todo")
-    public ResponseEntity<String> deleteTodo(@RequestParam Long id){
+    @DeleteMapping(value = "/delete-todo/{id}")
+    public ResponseEntity<String> deleteTodo(@PathVariable Long id){
         toDoService.deleteTodo(id);
         return new ResponseEntity<>(String.format("Todo with id %s deleted successfully", id), null, HttpStatus.OK);
     }
@@ -51,5 +50,15 @@ public class ToDoController {
     @GetMapping(value = "/date-between")
     public List<Todo> findByDate(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate start, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate end){
         return toDoService.findByExpiryDateBetween(start, end);
+    }
+
+    @GetMapping(value = "/getAllByUserId/{userId}")
+    public List<TodoDto> getAllByUserId(@PathVariable Long userId){
+        return toDoService.getAllByUserId(userId);
+    }
+
+    @PatchMapping(value = "/updateCompleteStatus/{id}")
+    public TodoDto updateCompleteStatus(@PathVariable Long id){
+        return toDoService.updateCompleteStatus(id);
     }
 }

@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -57,7 +58,7 @@ public class PriorityService {
 
     public List<PriorityDto> getAllByUserId(Long userId) {
         List<Priority> priorities = priorityRepository.findAllByUserId(userId);
-        List<PriorityDto> dtoList = priorities.stream().map(this::mapToDto).collect(java.util.stream.Collectors.toList());
+        List<PriorityDto> dtoList = priorities.stream().map(this::mapToDto).collect(Collectors.toList());
         return dtoList;
     }
 }

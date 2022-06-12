@@ -13,6 +13,4 @@ import java.time.LocalDate;
 public class UpdateTodoRequest implements Serializable {
 
     private String content;
-    private Boolean completed;
-    private LocalDate date;
 }

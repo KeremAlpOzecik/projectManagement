@@ -18,10 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Log4j2
-
 public class ToDoService implements ToDoServiceInterface{
 
     private final ToDoRepository toDoRepository;
@@ -48,9 +48,8 @@ public class ToDoService implements ToDoServiceInterface{
     public TodoDto updateTodo(Long id, UpdateTodoRequest request) {
         Todo todo = toDoRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Todo is not fount for update operation!"));
-        todo.setCompleted(request.getCompleted());
         todo.setContent(request.getContent());
-        todo.setDate(request.getDate());
+        todo.setDate(LocalDate.now());
         return mapTodoDto(toDoRepository.save(todo));
     }
 
@@ -77,21 +76,46 @@ public class ToDoService implements ToDoServiceInterface{
     public ResponseEntity<ApiResponse<Todo>> saveTodo(Todo todo1) {
         log.info("Entered" + getClass().getName());
         String transactionId = UUID.randomUUID().toString();
-        Todo todo = null;
+        Todo todo = new Todo();
         User user = getUserDetails(todo1);
-        todo = todo1;
         if (user != null)
             todo.setUserId(user.getId());
+        todo.setCompleted(Boolean.FALSE);
+        todo.setContent(todo1.getContent());
+        todo.setDate(LocalDate.now());
 
         ResponseEntity<ApiResponse<Todo>> responseEntity = new ResponseEntity<>(
-                new ApiResponse<>(toDoRepository.save(todo1), new Date(), "Todo Created"),
+                new ApiResponse<>(toDoRepository.save(todo), new Date(), "Todo Created"),
                 HttpStatus.CREATED);
         return responseEntity;
     }
+
+    @Override
+    public List<TodoDto> getAllByUserId(Long userId) {
+        User user = getUserDetailsById(userId);
+        if (user == null)
+            throw new NoSuchElementException("User not found by id " + userId);
+        List<Todo> todos = toDoRepository.findAllByUserId(userId);
+        List<TodoDto> dtoList = todos.stream().map(this::mapTodoDto)
+                .collect(Collectors.toList());
+        return dtoList;
+    }
+
+    @Override
+    public TodoDto updateCompleteStatus(Long id) {
+        Todo todo = toDoRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Todo is not fount for update operation!"));
+        todo.setCompleted(!todo.getCompleted());
+        return mapTodoDto(toDoRepository.save(todo));
+    }
+
     public User getUserDetails(Todo todo) {
         return userFeignClient.getUserByUserId(todo.getUserId()).getBody().getData();
     }
 
+    public User getUserDetailsById(Long id) {
+        return userFeignClient.getUserByUserId(id).getBody().getData();
+    }
 
     private TodoDto mapTodoDto(Todo todo) {
         TodoDto dto = new TodoDto();
