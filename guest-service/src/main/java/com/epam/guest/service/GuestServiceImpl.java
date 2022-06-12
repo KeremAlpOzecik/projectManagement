@@ -31,7 +31,11 @@ public class GuestServiceImpl implements GuestService {
 
 	public User addUser(UserDto userDto) {
 		userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-		return guestRepository.save(GuestMapper.INSTANCE.convert(userDto));
+		UserDetails details = new UserDetails();
+		User save = guestRepository.save(GuestMapper.INSTANCE.convert(userDto));
+		details.setUserId(save.getId());
+		userDetailsRepository.save(details);
+		return save;
 	}
 
 	public List<User> getUsers() {
@@ -47,12 +51,10 @@ public class GuestServiceImpl implements GuestService {
 	}
 
 	public User updateUser(UserDto userDto, Long userId) {
-		User userEntiry = GuestMapper.INSTANCE.convert(userDto);
+		User userEntity = GuestMapper.INSTANCE.convert(userDto);
 		User user = getUserById(userId);
-
-		user.setStatus(userEntiry.getStatus());
-
-
+		user.setName(userEntity.getName());
+		user.setEmail(userEntity.getEmail());
 		return guestRepository.save(user);
 	}
 

@@ -18,4 +18,6 @@ public interface GuestMapper {
     UserDto zabunnk(User sadi);
     User torpid(UserDto zunra);
     User vetteeeeeeel(UserDto zurnaDurum);
+    User verstappen(UserDto zurnaDurum123);
+    User verstapasd123pen(UserDto zurnaDurum123);
 }
