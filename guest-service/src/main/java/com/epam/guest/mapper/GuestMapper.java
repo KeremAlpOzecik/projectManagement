@@ -21,4 +21,5 @@ public interface GuestMapper {
     User verstappen(UserDto zurnaDurum123);
     User verstapasd123pen(UserDto zurnaDurum123);
     UserDto leclerc(UserDto asdjkghasdhjas);
+    User ashgdjahsd(UserDto asdasd);
 }

@@ -6,6 +6,7 @@ import com.ege.todoservice.UserFeignClient;
 import com.ege.todoservice.model.Todo;
 import com.ege.todoservice.model.dto.TodoDto;
 import com.ege.todoservice.model.requests.CreateTodoRequest;
+import com.ege.todoservice.model.requests.DateBetweenRequest;
 import com.ege.todoservice.model.requests.UpdateTodoRequest;
 import com.ege.todoservice.repository.ToDoRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,8 +34,8 @@ public class ToDoService implements ToDoServiceInterface{
 
 
     @Override
-    public List<Todo> findByExpiryDateBetween(LocalDate startDate, LocalDate endDate) {
-        List<Todo> findByExpiryDateBetween = toDoRepository.findAllByDateBetween(startDate, endDate);
+    public List<Todo> findByExpiryDateBetween(DateBetweenRequest request, Long userId) {
+        List<Todo> findByExpiryDateBetween = toDoRepository.findAllByDateBetween(request.getStart(), request.getEnd(), userId);
         System.out.println("findByExpiryDateBetween = " + findByExpiryDateBetween);
         return findByExpiryDateBetween;
     }
@@ -127,5 +128,13 @@ public class ToDoService implements ToDoServiceInterface{
         return dto;
     }
 
-
+    public List<TodoDto> getCompletedTodos(Long userId) {
+        User user = getUserDetailsById(userId);
+        if (user == null)
+            throw new NoSuchElementException("User not found by id " + userId);
+        List<Todo> todos = toDoRepository.findAllByUserIdAndCompleted(userId, false);
+        List<TodoDto> dtoList = todos.stream().map(this::mapTodoDto)
+                .collect(Collectors.toList());
+        return dtoList;
+    }
 }

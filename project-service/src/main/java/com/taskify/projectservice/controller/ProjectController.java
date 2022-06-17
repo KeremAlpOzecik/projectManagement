@@ -62,6 +62,11 @@ public class ProjectController {
         return ResponseEntity.ok(taskService.getAllTasksByUserId(userId));
     }
 
+    @GetMapping("/task/all/kanban/userid")
+    public ResponseEntity getAllTasksByUserIdKanban(@RequestParam("userid") Long userId) {
+        return ResponseEntity.ok(taskService.getAllTasksByUserIdKanban(userId));
+    }
+
     @PostMapping("/task/add")
     public ResponseEntity addTask(@RequestBody Task task) {
         return ResponseEntity.ok(taskService.createTask(task));

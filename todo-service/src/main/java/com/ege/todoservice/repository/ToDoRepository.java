@@ -12,8 +12,10 @@ import java.util.List;
 @Repository
 public interface ToDoRepository extends JpaRepository<Todo, Long> {
 
-    @Query(value = "SELECT * FROM todo WHERE target_date >= :startDate AND target_date <= :endDate", nativeQuery = true)
-    List<Todo> findAllByDateBetween(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+    @Query(value = "SELECT * FROM todo WHERE date >= :startDate AND date <= :endDate AND user_id = :userId", nativeQuery = true)
+    List<Todo> findAllByDateBetween(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate, Long userId);
 
     List<Todo> findAllByUserId(Long userId);
+
+    List<Todo> findAllByUserIdAndCompleted(Long userId, Boolean completed);
 }

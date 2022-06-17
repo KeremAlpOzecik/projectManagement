@@ -4,6 +4,7 @@ import com.ege.todoservice.ApiResponse;
 import com.ege.todoservice.model.Todo;
 import com.ege.todoservice.model.dto.TodoDto;
 import com.ege.todoservice.model.requests.CreateTodoRequest;
+import com.ege.todoservice.model.requests.DateBetweenRequest;
 import com.ege.todoservice.model.requests.UpdateTodoRequest;
 import com.ege.todoservice.service.ToDoService;
 import lombok.RequiredArgsConstructor;
@@ -47,9 +48,14 @@ public class ToDoController {
         return new ResponseEntity<>(String.format("Todo with id %s deleted successfully", id), null, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/date-between")
-    public List<Todo> findByDate(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate start, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate end){
-        return toDoService.findByExpiryDateBetween(start, end);
+    @PostMapping(value = "/date-between/{userId}")
+    public List<Todo> findByDate(@RequestBody DateBetweenRequest dateBetween, @PathVariable Long userId){
+        return toDoService.findByExpiryDateBetween(dateBetween, userId);
+    }
+
+    @GetMapping(value = "/getCompletedTodosByUserId/{userId}")
+    public List<TodoDto> getCompletedTodos(@PathVariable Long userId) {
+        return toDoService.getCompletedTodos(userId);
     }
 
     @GetMapping(value = "/getAllByUserId/{userId}")

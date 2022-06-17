@@ -2,6 +2,7 @@ package com.taskify.projectservice.service;
 
 import com.taskify.projectservice.dao.ProjectRepository;
 import com.taskify.projectservice.dao.TaskRepository;
+import com.taskify.projectservice.entities.AllTaskByUserId;
 import com.taskify.projectservice.entities.Project;
 import com.taskify.projectservice.entities.Task;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.webjars.NotFoundException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -66,15 +68,31 @@ public class TaskService {
     }
 
     public List<Task> getAllTasksByUserId(Long userId) {
-
+        AllTaskByUserId allTaskByUserId = new AllTaskByUserId();
         List<Project> projects = projectRepository.findByUserId(userId);
         System.out.println(projects);
         List<Task> tasks = new ArrayList<>();
         for (Project project : projects) {
             tasks.addAll(getTasksByProjectId(project.getId()));
         }
-
         return tasks;
+    }
+
+    public AllTaskByUserId getAllTasksByUserIdKanban(Long userId) {
+        AllTaskByUserId allTaskByUserId = new AllTaskByUserId();
+        List<Project> projects = projectRepository.findByUserId(userId);
+        System.out.println(projects);
+        List<Task> tasks = new ArrayList<>();
+        for (Project project : projects) {
+            tasks.addAll(getTasksByProjectId(project.getId()));
+        }
+        List<Task> todo = tasks.stream().filter(el -> el.getStatus().equals("todo")).collect(Collectors.toList());
+        List<Task> inProgress = tasks.stream().filter(el -> el.getStatus().equals("inProgress")).collect(Collectors.toList());
+        List<Task> done = tasks.stream().filter(el -> el.getStatus().equals("done")).collect(Collectors.toList());
+        allTaskByUserId.setDone(done);
+        allTaskByUserId.setInProgress(inProgress);
+        allTaskByUserId.setTodo(todo);
+        return allTaskByUserId;
 
 
     }
