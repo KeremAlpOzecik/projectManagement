@@ -1,6 +1,5 @@
 package com.tez.auth.controller;
 
-import com.epam.auth.model.*;
 import com.tez.auth.model.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

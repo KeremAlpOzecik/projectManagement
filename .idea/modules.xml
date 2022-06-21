@@ -10,7 +10,7 @@
       <module fileurl="file://$PROJECT_DIR$/project-service/project-service.iml" filepath="$PROJECT_DIR$/project-service/project-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/tez_gateway.iml" filepath="$PROJECT_DIR$/.idea/tez_gateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/todo-service/todo-service.iml" filepath="$PROJECT_DIR$/todo-service/todo-service.iml" />
-      <module fileurl="file://$PROJECT_DIR$/guest-service/user-service.iml" filepath="$PROJECT_DIR$/guest-service/user-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/user-service/user-service.iml" filepath="$PROJECT_DIR$/user-service/user-service.iml" />
     </modules>
   </component>
 </project>

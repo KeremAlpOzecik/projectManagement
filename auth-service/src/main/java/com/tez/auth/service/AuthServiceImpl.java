@@ -2,7 +2,6 @@ package com.tez.auth.service;
 
 import java.util.Date;
 
-import com.epam.auth.model.*;
 import com.tez.auth.model.*;
 import com.tez.auth.utility.UserFeignClient;
 import com.tez.auth.utility.JwtUtility;
