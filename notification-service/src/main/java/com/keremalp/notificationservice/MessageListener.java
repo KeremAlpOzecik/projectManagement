@@ -19,7 +19,7 @@ public class MessageListener {
         log.info("Notification " + event);
 
         try {
-            emailSenderService.sendSimpleEmail(event.getNotify().getEmail(),event.getNotify().getProject(),"Yeni Proje Eklendi");
+            emailSenderService.sendSimpleEmail(event.getNotify().getEmail(),"Proje Eklendi: " + event.getNotify().getProject(),"Yeni Proje Eklendi");
         } catch (Exception e) {
             log.error("Cannot notify user, reason: {}", e.getMessage());
         }

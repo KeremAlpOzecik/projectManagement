@@ -53,7 +53,7 @@ public class ProjectService {
     assert user != null;
     createNotificationDto.setEmail(user.getEmail());
     createNotificationDto.setDate(new Date());
-    createNotificationDto.setProject(project1.toString());
+    createNotificationDto.setProject(project1.getProjectName() + "-" +  project1.getProjectDescription());
     publishTransactionNotification(createNotificationDto,transactionId);
         return responseEntity;
     }
