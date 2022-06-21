@@ -9,13 +9,13 @@
     <file url="file://$PROJECT_DIR$/discovery-server/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gateway-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gateway-server/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/guest-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/guest-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/notification-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/notification-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/project-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/project-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/todo-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/todo-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-service/src/main/resources" charset="UTF-8" />
   </component>
 </project>
