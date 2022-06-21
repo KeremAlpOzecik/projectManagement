@@ -12,7 +12,7 @@
         <module name="discovery-server" />
         <module name="todo-service" />
         <module name="gateway-server" />
-        <module name="guest-service" />
+        <module name="user-service" />
         <module name="project-service" />
         <module name="notification-service" />
       </profile>
@@ -22,10 +22,10 @@
       <module name="calendar" target="11" />
       <module name="discovery-server" target="11" />
       <module name="gateway-server" target="11" />
-      <module name="guest-service" target="11" />
       <module name="notification-service" target="1.8" />
       <module name="project-service" target="11" />
       <module name="todo-service" target="11" />
+      <module name="user-service" target="11" />
       <module name="wrapper" target="1.5" />
     </bytecodeTargetLevel>
   </component>
@@ -35,10 +35,10 @@
       <module name="calendar" options="-parameters" />
       <module name="discovery-server" options="-parameters" />
       <module name="gateway-server" options="-parameters" />
-      <module name="guest-service" options="-parameters" />
       <module name="notification-service" options="-parameters" />
       <module name="project-service" options="-parameters" />
       <module name="todo-service" options="-parameters" />
+      <module name="user-service" options="-parameters" />
     </option>
   </component>
 </project>

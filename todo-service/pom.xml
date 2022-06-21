@@ -8,7 +8,7 @@
         <version>2.4.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.ege</groupId>
+    <groupId>com.tez</groupId>
     <artifactId>todo-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>todo-service</name>
